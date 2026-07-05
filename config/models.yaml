@@ -1,0 +1,46 @@
+# LLM Models Configuration
+
+default_llm: "mistral"
+default_embeddings: "nomic-embed-text"
+
+llm_models:
+  mistral:
+    name: "mistral"
+    endpoint: "http://localhost:11434"
+    parameters:
+      temperature: 0.7
+      top_p: 0.9
+      top_k: 40
+      max_tokens: 2048
+      num_predict: 2048
+      context_window: 8000
+      system_prompt: |
+        You are an expert penetration tester and security analyst. 
+        Provide detailed, accurate security insights and actionable recommendations.
+        Always explain your reasoning and consider both offensive and defensive perspectives.
+
+  neural-chat:
+    name: "neural-chat"
+    endpoint: "http://localhost:11434"
+    parameters:
+      temperature: 0.5
+      max_tokens: 1024
+      context_window: 4000
+
+embedding_models:
+  nomic-embed-text:
+    name: "nomic-embed-text"
+    endpoint: "http://localhost:11434"
+    parameters:
+      embedding_dimension: 768
+      max_tokens: 2048
+
+reranker:
+  enabled: true
+  model: "cross-encoder"
+  threshold: 0.5
+
+quantization:
+  enabled: false
+  method: "int8"
+  optimize_for_inference: true

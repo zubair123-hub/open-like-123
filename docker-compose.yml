@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Main Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pentesting-ai
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    volumes:
+      - ./cache:/app/cache
+      - ./exports:/app/exports
+      - ./reports:/app/reports
+      - ./database:/app/database
+      - ./sessions:/app/sessions
+      - ./logs:/app/logs
+    environment:
+      - DEBUG=False
+      - LOG_LEVEL=INFO
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DATABASE_URL=sqlite:///./database/sqlite/app.db
+    depends_on:
+      - ollama
+    networks:
+      - pentesting-network
+
+  # Ollama LLM Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-service
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    networks:
+      - pentesting-network
+
+  # Redis Cache (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: pentesting-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - pentesting-network
+
+volumes:
+  ollama-data:
+  redis-data:
+
+networks:
+  pentesting-network:
+    driver: bridge
