@@ -1,0 +1,63 @@
+# Main Configuration File
+
+application:
+  name: "Offline Pentesting AI"
+  version: "1.0.0"
+  debug: false
+  timezone: "UTC"
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+  workers: 4
+  timeout: 30
+  cors:
+    allow_origins:
+      - "http://localhost:3000"
+      - "http://localhost:8000"
+    allow_methods:
+      - "*"
+    allow_headers:
+      - "*"
+
+ui:
+  port: 3000
+  theme: "dark"
+  primary_color: "#cc0000"  # Red
+  secondary_color: "#000000"  # Black
+  font_family: "Roboto Mono"
+  enable_animations: true
+
+database:
+  type: "sqlite"
+  path: "./database/sqlite/app.db"
+  echo: false
+  pool_size: 5
+  pool_recycle: 3600
+
+vector_store:
+  type: "chroma"
+  path: "./database/vectors"
+  similarity_threshold: 0.7
+  top_k: 5
+
+cache:
+  type: "redis"
+  host: "localhost"
+  port: 6379
+  db: 0
+  ttl: 3600
+
+security:
+  enable_authentication: false
+  enable_encryption: true
+  secret_key: "change-me-in-production"
+  token_expiry: 3600
+
+logging:
+  level: "INFO"
+  format: "json"
+  file: "./logs/app.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5

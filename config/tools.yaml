@@ -1,0 +1,63 @@
+# Security Tools Configuration
+
+tools:
+  network_scanner:
+    enabled: true
+    type: "nmap"
+    timeout: 300
+    aggressive_scan: false
+    common_ports: true
+
+  web_scanner:
+    enabled: true
+    type: "custom"
+    check_headers: true
+    check_ssl: true
+    check_certs: true
+    timeout: 60
+    follow_redirects: true
+    verify_ssl: false
+
+  ssl_analyzer:
+    enabled: true
+    check_protocols: true
+    check_ciphers: true
+    check_certificates: true
+    check_vulnerabilities: true
+
+  dns_analyzer:
+    enabled: true
+    check_records: true
+    check_transfer: true
+    timeout: 10
+
+  vulnerability_scanner:
+    enabled: true
+    offline_database: true
+    check_cves: true
+    check_cwes: true
+    severity_threshold: "medium"
+
+  api_analyzer:
+    enabled: true
+    check_authentication: true
+    check_authorization: true
+    check_input_validation: true
+    check_rate_limiting: true
+
+  code_analyzer:
+    enabled: true
+    check_secrets: true
+    check_vulnerabilities: true
+    languages:
+      - "python"
+      - "javascript"
+      - "java"
+      - "go"
+      - "c"
+
+plugins:
+  enabled: true
+  plugin_dir: "./plugins"
+  auto_load: true
+  auto_update: false
